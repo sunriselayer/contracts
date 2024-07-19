@@ -1,4 +1,5 @@
 #!/bin/bash
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
 
 cargo run schema
 cosmwasm-ts-codegen generate \

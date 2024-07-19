@@ -1,5 +1,6 @@
 use crate::error::ContractError;
-use crate::execute::deposit_to_vault::execute_deposit_to_vault;
+use crate::execute::sunrise_swap::execute_sunrise_swap;
+use crate::execute::sunrise_swap::execute_sunrise_swap;
 use crate::execute::update_params::execute_update_params;
 use crate::msgs::{ExecuteMsg, InstantiateMsg, MigrateMsg, QueryMsg};
 use crate::query::params::query_params;
@@ -33,7 +34,7 @@ pub fn execute(
 ) -> Result<Response<UnunifiMsg>, ContractError> {
     match msg {
         ExecuteMsg::UpdateParams(msg) => execute_update_params(deps, env, info, msg),
-        ExecuteMsg::DepositToVault(msg) => execute_deposit_to_vault(deps, env, info, msg),
+        ExecuteMsg::SunriseSwap(msg) => execute_sunrise_swap(deps, env, info, msg),
     }
 }
 

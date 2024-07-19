@@ -10,7 +10,7 @@ pub struct InstantiateMsg {
 #[cw_serde]
 pub enum ExecuteMsg {
     UpdateParams(UpdateParamsMsg),
-    DepositToVault(SunriseSwapMsg),
+    SunriseSwap(SunriseSwapMsg),
 }
 
 #[cw_serde]

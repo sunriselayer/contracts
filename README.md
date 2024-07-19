@@ -11,4 +11,4 @@ This repository contains the contracts for UnUniFi.
 
 - [ica-tx](./packages/ica-tx) - ICA transaction builder
 - [strategy](./packages/strategy) - Strategy contract interface
-- [ununifi-binding](./packages/ununifi-binding) - UnUniFi contract binding
+- [strategy-evm](./packages/ununifi-binding) - UnUniFi contract binding

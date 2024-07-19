@@ -7,18 +7,11 @@
     "title": "InstantiateMsg",
     "type": "object",
     "required": [
-      "authority",
-      "denom_swap_contract_map"
+      "authority"
     ],
     "properties": {
       "authority": {
         "type": "string"
-      },
-      "denom_swap_contract_map": {
-        "type": "object",
-        "additionalProperties": {
-          "type": "string"
-        }
       }
     },
     "additionalProperties": false
@@ -42,28 +35,32 @@
       {
         "type": "object",
         "required": [
-          "deposit_to_vault"
+          "sunrise_swap"
         ],
         "properties": {
-          "deposit_to_vault": {
-            "$ref": "#/definitions/DepositToVaultMsg"
+          "sunrise_swap": {
+            "$ref": "#/definitions/SunriseSwapMsg"
           }
         },
         "additionalProperties": false
       }
     ],
     "definitions": {
-      "DepositToVaultMsg": {
+      "SunriseSwapMsg": {
         "type": "object",
         "required": [
-          "depositor",
-          "vault_id"
+          "sunrise_address",
+          "channel_id",
+          "memo"
         ],
         "properties": {
-          "depositor": {
+          "sunrise_address": {
             "type": "string"
           },
-          "vault_id": {
+          "channel_id": {
+            "type": "string"
+          },
+          "memo": {
             "type": "string"
           }
         },
@@ -77,15 +74,6 @@
               "string",
               "null"
             ]
-          },
-          "denom_swap_contract_map": {
-            "type": [
-              "object",
-              "null"
-            ],
-            "additionalProperties": {
-              "type": "string"
-            }
           }
         },
         "additionalProperties": false
@@ -119,18 +107,11 @@
       "title": "Params",
       "type": "object",
       "required": [
-        "authority",
-        "symbol_swap_contract_map"
+        "authority"
       ],
       "properties": {
         "authority": {
           "$ref": "#/definitions/Addr"
-        },
-        "symbol_swap_contract_map": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/Addr"
-          }
         }
       },
       "additionalProperties": false,

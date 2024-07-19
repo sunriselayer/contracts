@@ -1,7 +1,7 @@
 [workspace]
-members = ["contracts/*", "packages/*"]
+members = ["contracts/*"]
 
-exclude = ["contracts/outpost-sunrise-swap-external-axelar", "packages/strategy-evm"]
+exclude = ["contracts/outpost-sunrise-swap-external-axelar"]
 
 [profile.release]
 rpath = false

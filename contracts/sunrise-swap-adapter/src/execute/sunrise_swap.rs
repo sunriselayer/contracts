@@ -33,7 +33,7 @@ pub fn execute_sunrise_swap(
     }));
 
     // response = response.add_message(CosmosMsg::Bank(cosmwasm_std::BankMsg::Send {
-    //     to_address: msg.depositor,
+    //     to_address: msg.sunrise_address,
     //     amount: vec![coin],
     // }));
 

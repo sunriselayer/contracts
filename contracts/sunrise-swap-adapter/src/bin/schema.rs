@@ -1,5 +1,5 @@
 use cosmwasm_schema::write_api;
-use yieldaggregator_adapter::msgs::{ExecuteMsg, InstantiateMsg, QueryMsg};
+use sunrise_swap_adapter::msgs::{ExecuteMsg, InstantiateMsg, QueryMsg};
 
 fn main() {
     write_api! {

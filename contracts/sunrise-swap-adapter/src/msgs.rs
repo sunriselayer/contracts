@@ -10,7 +10,7 @@ pub struct InstantiateMsg {
 #[cw_serde]
 pub enum ExecuteMsg {
     UpdateParams(UpdateParamsMsg),
-    DepositToVault(DepositToVaultMsg),
+    DepositToVault(SunriseSwapMsg),
 }
 
 #[cw_serde]
@@ -19,9 +19,10 @@ pub struct UpdateParamsMsg {
 }
 
 #[cw_serde]
-pub struct DepositToVaultMsg {
-    pub depositor: String,
-    pub vault_id: String,
+pub struct SunriseSwapMsg {
+    pub sunrise_address: String,
+    pub channel_id: String,
+    pub memo: String,
 }
 
 #[cw_serde]

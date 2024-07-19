@@ -1,6 +1,6 @@
 use crate::helpers::setup;
 use cosmwasm_std::testing::{mock_env, mock_info};
-use yieldaggregator_adapter::{
+use sunrise_swap_adaptor::{
     error::ContractError, execute::update_params::execute_update_params, msgs::UpdateParamsMsg,
     query::params::query_params,
 };

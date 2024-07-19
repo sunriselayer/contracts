@@ -3,8 +3,8 @@ use cosmwasm_std::testing::{
     mock_dependencies, mock_env, mock_info, MockApi, MockQuerier, MockStorage,
 };
 use cosmwasm_std::{from_binary, Deps, OwnedDeps};
-use yieldaggregator_adapter::contract::{instantiate, query};
-use yieldaggregator_adapter::msgs::{InstantiateMsg, QueryMsg};
+use sunrise_swap_adaptor::contract::{instantiate, query};
+use sunrise_swap_adaptor::msgs::{InstantiateMsg, QueryMsg};
 
 pub fn setup() -> OwnedDeps<MockStorage, MockApi, MockQuerier> {
     let mut deps = mock_dependencies();

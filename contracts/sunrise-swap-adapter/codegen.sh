@@ -5,5 +5,5 @@ cosmwasm-ts-codegen generate \
     --plugin client \
     --schema ./schema \
     --out ./ts \
-    --name yieldaggregator-adapter \
+    --name sunrise-swap-adapter \
     --no-bundle

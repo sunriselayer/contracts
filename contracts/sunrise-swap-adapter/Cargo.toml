@@ -1,5 +1,5 @@
 [package]
-name = "yieldaggregator-adapter"
+name = "sunrise-swap-adaptor"
 version = "1.0.0"
 authors = []
 edition = "2018"
@@ -19,15 +19,11 @@ crate-type = ["cdylib", "rlib"]
 
 [features]
 # for quicker tests, cargo test --lib
-# for more explicit tests, cargo test --features=backtraces
-backtraces = ["cosmwasm-std/backtraces"]
 
 [dependencies]
-cosmwasm-std = { version = "1.3.1", features = ["stargate"] }
+cosmwasm-std = { version = "2.1.0", features = ["stargate"] }
 cosmwasm-schema = "1.3.1"
 thiserror = "1.0"
 cw-storage-plus =  "1.1.0"
 cw-utils = "1.0.1"
 serde-json-wasm = "0.5.1"
-ununifi-binding = { path = "../../packages/ununifi-binding" }
-swap-for-bridge = { path = "../swap-for-bridge" }

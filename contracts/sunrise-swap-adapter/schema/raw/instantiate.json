@@ -9,12 +9,6 @@
   "properties": {
     "authority": {
       "type": "string"
-    },
-    "denom_swap_contract_map": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "string"
-      }
     }
   },
   "additionalProperties": false

@@ -1,5 +1,5 @@
 {
-  "contract_name": "yieldaggregator-adapter",
+  "contract_name": "sunrise-swap-adapter",
   "contract_version": "1.0.0",
   "idl_version": "1.0.0",
   "instantiate": {

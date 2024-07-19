@@ -7,7 +7,6 @@ use crate::state::PARAMS;
 use crate::types::Params;
 use cosmwasm_std::entry_point;
 use cosmwasm_std::{to_binary, Binary, Deps, DepsMut, Env, MessageInfo, Response, StdResult};
-use ununifi_binding::v1::binding::UnunifiMsg;
 
 //Initialize the contract.
 #[cfg_attr(not(feature = "library"), entry_point)]

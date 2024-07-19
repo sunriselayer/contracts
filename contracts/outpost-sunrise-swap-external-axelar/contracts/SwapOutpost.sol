@@ -8,7 +8,7 @@ import {AxelarExecutable} from "@axelar-network/axelar-gmp-sdk-solidity/contract
 import {IAxelarGateway} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGateway.sol";
 import {IAxelarGasService} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGasService.sol";
 
-contract YieldAggregatorOutpost is AxelarExecutable {
+contract SwapOutpost is AxelarExecutable {
     IAxelarGasService public immutable gasReciever;
     string public chainName; // name of the chain this contract is deployed to
 
@@ -21,11 +21,12 @@ contract YieldAggregatorOutpost is AxelarExecutable {
         chainName = chainName_;
     }
 
-    function depositToVault(
+    function sunriseSwap(
         string memory destinationChain,
         string memory destinationAddress,
-        string calldata depositor,
-        string calldata vaultId,
+        string calldata sunriseAddress,
+        string calldata channelId,
+        string calldata memo,
         string memory symbol,
         uint256 amount
     ) external payable {
@@ -34,7 +35,11 @@ contract YieldAggregatorOutpost is AxelarExecutable {
         IERC20(tokenAddress).approve(address(gateway), amount);
 
         // 1. Generate GMP payload
-        bytes memory payloadToCW = _encodePayloadToCosmWasm(depositor, vaultId);
+        bytes memory payloadToCW = _encodePayloadToCosmWasm(
+            sunriseAddress,
+            channelId,
+            memo
+        );
         // 2. Pay for gas
         if (msg.value > 0) {
             gasReciever.payNativeGasForContractCallWithToken{value: msg.value}(
@@ -59,8 +64,9 @@ contract YieldAggregatorOutpost is AxelarExecutable {
     }
 
     function _encodePayloadToCosmWasm(
-        string calldata depositor,
-        string calldata vaultId
+        string calldata sunriseAddress,
+        string calldata channelId,
+        string calldata memo
     ) internal pure returns (bytes memory) {
         // Schema
         //   bytes4  version number (0x00000001)
@@ -71,19 +77,21 @@ contract YieldAggregatorOutpost is AxelarExecutable {
         //     bytes                    abi encoded argument values
 
         // contract call arguments for ExecuteMsg::receive_message_evm{ source_chain, source_address, payload }
-        bytes memory argValues = abi.encode(depositor, vaultId);
+        bytes memory argValues = abi.encode(sunriseAddress, channelId, memo);
 
         string[] memory argumentNameArray = new string[](3);
-        argumentNameArray[0] = "depositor";
-        argumentNameArray[1] = "vault_id";
+        argumentNameArray[0] = "sunrise_address";
+        argumentNameArray[1] = "channel_id";
+        argumentNameArray[2] = "memo";
 
         string[] memory abiTypeArray = new string[](3);
         abiTypeArray[0] = "string";
         abiTypeArray[1] = "string";
+        abiTypeArray[2] = "string";
 
         bytes memory gmpPayload;
         gmpPayload = abi.encode(
-            "deposit_to_vault",
+            "sunrise_swap",
             argumentNameArray,
             abiTypeArray,
             argValues

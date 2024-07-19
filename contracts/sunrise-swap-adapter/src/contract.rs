@@ -1,13 +1,12 @@
 use crate::error::ContractError;
 use crate::execute::sunrise_swap::execute_sunrise_swap;
-use crate::execute::sunrise_swap::execute_sunrise_swap;
 use crate::execute::update_params::execute_update_params;
 use crate::msgs::{ExecuteMsg, InstantiateMsg, MigrateMsg, QueryMsg};
 use crate::query::params::query_params;
 use crate::state::PARAMS;
 use crate::types::Params;
-use cosmwasm_std::entry_point;
-use cosmwasm_std::{to_binary, Binary, Deps, DepsMut, Env, MessageInfo, Response, StdResult};
+use cosmwasm_std::{entry_point, to_json_binary};
+use cosmwasm_std::{Binary, Deps, DepsMut, Env, MessageInfo, Response, StdResult};
 
 //Initialize the contract.
 #[cfg_attr(not(feature = "library"), entry_point)]
@@ -31,7 +30,7 @@ pub fn execute(
     env: Env,
     info: MessageInfo,
     msg: ExecuteMsg,
-) -> Result<Response<UnunifiMsg>, ContractError> {
+) -> Result<Response, ContractError> {
     match msg {
         ExecuteMsg::UpdateParams(msg) => execute_update_params(deps, env, info, msg),
         ExecuteMsg::SunriseSwap(msg) => execute_sunrise_swap(deps, env, info, msg),
@@ -41,7 +40,7 @@ pub fn execute(
 #[cfg_attr(not(feature = "library"), entry_point)]
 pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
     match msg {
-        QueryMsg::Params {} => to_binary(&query_params(deps)?),
+        QueryMsg::Params {} => to_json_binary(&query_params(deps)?),
     }
 }
 

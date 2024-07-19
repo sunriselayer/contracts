@@ -1,14 +1,11 @@
 # Contracts Repository
 
-This repository contains the contracts for UnUniFi.
+This repository contains the contracts for Sunrise.
 
-## Contracts
+## EVM Contracts
 
-- [strategy-example](./contracts/strategy-example) - Example of a strategy contract
-- [strategy-osmosis](./contracts/strategy-osmosis) - Osmosis LP farming strategy contract
+- [sunrise-swap-external-axelar](./evm/outpost-sunrise-swap-external-axelar) - Send tokens to the Cosmos chain via Axelar GMP. Give the channel, address and memo to operate `sunrise-swap-adaptor`.
 
-## Packages
+## CosmWasm Contract
 
-- [ica-tx](./packages/ica-tx) - ICA transaction builder
-- [strategy](./packages/strategy) - Strategy contract interface
-- [strategy-evm](./packages/ununifi-binding) - UnUniFi contract binding
+- [sunrise-swap-adaptor](./cosmwasm/contracts/sunrise-swap-adapter) - Receive tokens from Axelar GMP and send Swap Request via IBC Transfer to Sunrise.

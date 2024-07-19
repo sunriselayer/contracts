@@ -19,10 +19,6 @@ const PRIV_KEY = process.env.PRIV_KEY || "";
 const config: HardhatUserConfig = {
   solidity: "0.8.19",
   networks: {
-    goerli: {
-      url: `https://goerli.infura.io/v3/${INFURA_API_KEY}`,
-      accounts: [PRIV_KEY],
-    },
     sepolia: {
       url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
       accounts: [PRIV_KEY],

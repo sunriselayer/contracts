@@ -1,10 +1,12 @@
 {
-  "name": "outpost-nftbackedloan-axelar-external-evm",
+  "name": "outpost-sunrise-swap-external-axelar",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "rm -rf artifacts && hardhat compile",
+    "deploy": "hardhat run scripts/deploy.ts --network sepolia",
+    "verify": "hardhat verify --network sepolia",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

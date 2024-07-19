@@ -1,0 +1,12 @@
+[workspace]
+members = ["contracts/*", "packages/*"]
+
+exclude = ["contracts/outpost-yieldaggregator-external-axelar", "contracts/outpost-nftbackedloan-axelar-external-evm", "packages/strategy-evm"]
+
+[profile.release]
+rpath = false
+lto = true
+overflow-checks = true
+opt-level = 3
+debug = false
+debug-assertions = false

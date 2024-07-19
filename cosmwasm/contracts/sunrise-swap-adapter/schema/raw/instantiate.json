@@ -3,8 +3,7 @@
   "title": "InstantiateMsg",
   "type": "object",
   "required": [
-    "authority",
-    "denom_swap_contract_map"
+    "authority"
   ],
   "properties": {
     "authority": {

@@ -6,24 +6,19 @@
 
 export interface InstantiateMsg {
   authority: string;
-  denom_swap_contract_map: {
-    [k: string]: string;
-  };
 }
 export type ExecuteMsg = {
   update_params: UpdateParamsMsg;
 } | {
-  deposit_to_vault: DepositToVaultMsg;
+  sunrise_swap: SunriseSwapMsg;
 };
 export interface UpdateParamsMsg {
   authority?: string | null;
-  denom_swap_contract_map?: {
-    [k: string]: string;
-  } | null;
 }
-export interface DepositToVaultMsg {
-  depositor: string;
-  vault_id: string;
+export interface SunriseSwapMsg {
+  channel_id: string;
+  memo: string;
+  sunrise_address: string;
 }
 export type QueryMsg = {
   params: {};
@@ -31,7 +26,4 @@ export type QueryMsg = {
 export type Addr = string;
 export interface Params {
   authority: Addr;
-  symbol_swap_contract_map: {
-    [k: string]: Addr;
-  };
 }

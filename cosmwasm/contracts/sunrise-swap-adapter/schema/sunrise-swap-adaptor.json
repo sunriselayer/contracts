@@ -1,5 +1,5 @@
 {
-  "contract_name": "sunrise-swap-adapter",
+  "contract_name": "sunrise-swap-adaptor",
   "contract_version": "1.0.0",
   "idl_version": "1.0.0",
   "instantiate": {
@@ -49,18 +49,18 @@
       "SunriseSwapMsg": {
         "type": "object",
         "required": [
-          "sunrise_address",
           "channel_id",
-          "memo"
+          "memo",
+          "sunrise_address"
         ],
         "properties": {
-          "sunrise_address": {
-            "type": "string"
-          },
           "channel_id": {
             "type": "string"
           },
           "memo": {
+            "type": "string"
+          },
+          "sunrise_address": {
             "type": "string"
           }
         },

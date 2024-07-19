@@ -1,4 +1,3 @@
-use crate::types::Params;
 use cosmwasm_schema::{cw_serde, QueryResponses};
 
 #[cw_serde]
@@ -27,7 +26,7 @@ pub struct SunriseSwapMsg {
 #[cw_serde]
 #[derive(QueryResponses)]
 pub enum QueryMsg {
-    #[returns(Params)]
+    #[returns(crate::types::Params)]
     Params {},
 }
 

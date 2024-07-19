@@ -1,8 +1,7 @@
 use crate::error::ContractError;
 use crate::msgs::SunriseSwapMsg;
-use cosmwasm_std::{CosmosMsg, DepsMut, Env, MessageInfo, Response};
+use cosmwasm_std::{CosmosMsg, DepsMut, Env, IbcTimeout, MessageInfo, Response};
 use cw_utils::one_coin;
-use ununifi_binding::v1::binding::UnunifiMsg;
 
 #[cfg(not(feature = "library"))]
 pub fn execute_sunrise_swap(
@@ -10,11 +9,7 @@ pub fn execute_sunrise_swap(
     env: Env,
     info: MessageInfo,
     msg: SunriseSwapMsg,
-) -> Result<Response<UnunifiMsg>, ContractError> {
-    use std::convert::TryFrom;
-
-    use cosmwasm_std::{IbcTimeout, Uint64};
-
+) -> Result<Response, ContractError> {
     let mut response = Response::new();
     let coin = one_coin(&info)?;
 

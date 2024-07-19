@@ -2,7 +2,6 @@ use crate::msgs::UpdateParamsMsg;
 use crate::state::PARAMS;
 use crate::{error::ContractError, types::Params};
 use cosmwasm_std::{DepsMut, Env, MessageInfo, Response};
-use ununifi_binding::v1::binding::UnunifiMsg;
 
 // #[cfg(not(feature = "library"))]
 pub fn execute_update_params(
@@ -10,7 +9,7 @@ pub fn execute_update_params(
     _env: Env,
     info: MessageInfo,
     msg: UpdateParamsMsg,
-) -> Result<Response<UnunifiMsg>, ContractError> {
+) -> Result<Response, ContractError> {
     let mut response = Response::new();
     let mut params: Params = PARAMS.load(deps.storage)?;
 

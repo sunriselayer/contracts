@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@axelar-network/axelar-gmp-sdk-solidity": "^4.0.3"
+    "@axelar-network/axelar-gmp-sdk-solidity": "^5.10.0"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^3.0.0",

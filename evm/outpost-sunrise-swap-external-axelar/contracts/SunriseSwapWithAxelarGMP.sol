@@ -8,7 +8,7 @@ import {AxelarExecutable} from "@axelar-network/axelar-gmp-sdk-solidity/contract
 import {IAxelarGateway} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGateway.sol";
 import {IAxelarGasService} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGasService.sol";
 
-contract SwapOutpost is AxelarExecutable {
+contract SunriseSwapWithAxelarGMP is AxelarExecutable {
     IAxelarGasService public immutable gasReciever;
     string public chainName; // name of the chain this contract is deployed to
 
@@ -31,8 +31,26 @@ contract SwapOutpost is AxelarExecutable {
         uint256 amount
     ) external payable {
         address tokenAddress = gateway.tokenAddresses(symbol);
-        IERC20(tokenAddress).transferFrom(msg.sender, address(this), amount);
-        IERC20(tokenAddress).approve(address(gateway), amount);
+        require(
+            IERC20(tokenAddress).transferFrom(
+                msg.sender,
+                address(this),
+                amount
+            ),
+            "Token transfer failed"
+        );
+        require(
+            IERC20(tokenAddress).approve(address(gateway), amount),
+            "Token approval failed"
+        );
+
+        // Emit event for swap initiation
+        emit SwapInitiated(
+            msg.sender,
+            destinationChain,
+            destinationAddress,
+            amount
+        );
 
         // 1. Generate GMP payload
         bytes memory payloadToCW = _encodePayloadToCosmWasm(
@@ -105,8 +123,8 @@ contract SwapOutpost is AxelarExecutable {
     }
 
     function _executeWithToken(
-        string calldata, /*sourceChain*/
-        string calldata, /*sourceAddress*/
+        string calldata /*sourceChain*/,
+        string calldata /*sourceAddress*/,
         bytes calldata payload,
         string calldata tokenSymbol,
         uint256 amount
@@ -115,5 +133,17 @@ contract SwapOutpost is AxelarExecutable {
         address tokenAddress = gateway.tokenAddresses(tokenSymbol);
 
         IERC20(tokenAddress).transfer(recipient, amount);
+
+        // Emit event for successful swap
+        emit SwapCompleted(recipient, amount);
     }
+
+    event SwapInitiated(
+        address indexed sender,
+        string destinationChain,
+        string destinationAddress,
+        uint256 amount
+    );
+
+    event SwapCompleted(address indexed recipient, uint256 amount);
 }

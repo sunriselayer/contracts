@@ -31,26 +31,8 @@ contract SunriseSwapWithAxelarGMP is AxelarExecutable {
         uint256 amount
     ) external payable {
         address tokenAddress = gateway.tokenAddresses(symbol);
-        require(
-            IERC20(tokenAddress).transferFrom(
-                msg.sender,
-                address(this),
-                amount
-            ),
-            "Token transfer failed"
-        );
-        require(
-            IERC20(tokenAddress).approve(address(gateway), amount),
-            "Token approval failed"
-        );
-
-        // Emit event for swap initiation
-        emit SwapInitiated(
-            msg.sender,
-            destinationChain,
-            destinationAddress,
-            amount
-        );
+        IERC20(tokenAddress).transferFrom(msg.sender, address(this), amount);
+        IERC20(tokenAddress).approve(address(gateway), amount);
 
         // 1. Generate GMP payload
         bytes memory payloadToCW = _encodePayloadToCosmWasm(
@@ -133,17 +115,5 @@ contract SunriseSwapWithAxelarGMP is AxelarExecutable {
         address tokenAddress = gateway.tokenAddresses(tokenSymbol);
 
         IERC20(tokenAddress).transfer(recipient, amount);
-
-        // Emit event for successful swap
-        emit SwapCompleted(recipient, amount);
     }
-
-    event SwapInitiated(
-        address indexed sender,
-        string destinationChain,
-        string destinationAddress,
-        uint256 amount
-    );
-
-    event SwapCompleted(address indexed recipient, uint256 amount);
 }

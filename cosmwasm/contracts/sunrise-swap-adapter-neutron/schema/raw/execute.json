@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ExecuteMsg",
+  "oneOf": [
+    {
+      "type": "object",
+      "required": [
+        "update_params"
+      ],
+      "properties": {
+        "update_params": {
+          "$ref": "#/definitions/UpdateParamsMsg"
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "sunrise_swap"
+      ],
+      "properties": {
+        "sunrise_swap": {
+          "$ref": "#/definitions/SunriseSwapMsg"
+        }
+      },
+      "additionalProperties": false
+    }
+  ],
+  "definitions": {
+    "SunriseSwapMsg": {
+      "type": "object",
+      "required": [
+        "channel_id",
+        "memo",
+        "sunrise_address"
+      ],
+      "properties": {
+        "channel_id": {
+          "type": "string"
+        },
+        "memo": {
+          "type": "string"
+        },
+        "sunrise_address": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "UpdateParamsMsg": {
+      "type": "object",
+      "properties": {
+        "authority": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

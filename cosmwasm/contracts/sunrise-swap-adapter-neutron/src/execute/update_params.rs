@@ -1,21 +1,25 @@
 use crate::msgs::UpdateParamsMsg;
 use crate::state::PARAMS;
-use crate::{error::ContractError, types::Params};
-use cosmwasm_std::{DepsMut, Env, MessageInfo, Response};
+use crate::types::Params;
+use cosmwasm_std::{DepsMut, Env, MessageInfo, Response, StdError};
+use neutron_sdk::{
+    bindings::{msg::NeutronMsg, query::NeutronQuery},
+    NeutronError, NeutronResult,
+};
 
 // #[cfg(not(feature = "library"))]
 pub fn execute_update_params(
-    deps: DepsMut,
+    deps: DepsMut<NeutronQuery>,
     _env: Env,
     info: MessageInfo,
     msg: UpdateParamsMsg,
-) -> Result<Response, ContractError> {
+) -> NeutronResult<Response<NeutronMsg>> {
     let mut response = Response::new();
     let mut params: Params = PARAMS.load(deps.storage)?;
 
     // Permission check
     if info.sender != params.authority {
-        return Err(ContractError::Unauthorized {});
+        return Err(NeutronError::Std(StdError::generic_err("Unauthorized")));
     }
 
     if let Some(authority) = msg.authority {

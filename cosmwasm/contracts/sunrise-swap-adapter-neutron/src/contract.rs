@@ -7,6 +7,10 @@ use crate::state::PARAMS;
 use crate::types::Params;
 use cosmwasm_std::{entry_point, to_json_binary};
 use cosmwasm_std::{Binary, Deps, DepsMut, Env, MessageInfo, Response, StdResult};
+use neutron_sdk::{
+    bindings::{msg::NeutronMsg, query::NeutronQuery},
+    NeutronResult,
+};
 
 //Initialize the contract.
 #[cfg_attr(not(feature = "library"), entry_point)]
@@ -26,11 +30,11 @@ pub fn instantiate(
 
 #[cfg_attr(not(feature = "library"), entry_point)]
 pub fn execute(
-    deps: DepsMut,
+    deps: DepsMut<NeutronQuery>,
     env: Env,
     info: MessageInfo,
     msg: ExecuteMsg,
-) -> Result<Response, ContractError> {
+) -> NeutronResult<Response<NeutronMsg>> {
     match msg {
         ExecuteMsg::UpdateParams(msg) => execute_update_params(deps, env, info, msg),
         ExecuteMsg::SunriseSwap(msg) => execute_sunrise_swap(deps, env, info, msg),

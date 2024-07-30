@@ -21,7 +21,7 @@ contract SunriseSwapWithAxelarGMP is AxelarExecutable {
         chainName = chainName_;
     }
 
-    function sunriseSwap(
+    function sendToSunrise(
         string memory destinationChain,
         string memory destinationAddress,
         string calldata sunriseAddress,
@@ -91,7 +91,7 @@ contract SunriseSwapWithAxelarGMP is AxelarExecutable {
 
         bytes memory gmpPayload;
         gmpPayload = abi.encode(
-            "sunrise_swap",
+            "send_to_sunrise",
             argumentNameArray,
             abiTypeArray,
             argValues

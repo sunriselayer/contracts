@@ -1,4 +1,4 @@
-use crate::msgs::SunriseSwapMsg;
+use crate::msgs::SendToSunriseMsg;
 use cosmwasm_std::{DepsMut, Env, MessageInfo, Response, StdError};
 use cw_utils::one_coin;
 use neutron_sdk::{
@@ -14,11 +14,11 @@ use neutron_sdk::{
 const FEE_DENOM: &str = "untrn";
 
 #[cfg(not(feature = "library"))]
-pub fn execute_sunrise_swap(
+pub fn execute_send_to_sunrise(
     deps: DepsMut<NeutronQuery>,
     env: Env,
     info: MessageInfo,
-    msg: SunriseSwapMsg,
+    msg: SendToSunriseMsg,
 ) -> NeutronResult<Response<NeutronMsg>> {
     let mut response = Response::new();
 

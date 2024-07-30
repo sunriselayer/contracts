@@ -8,7 +8,7 @@ pub struct InstantiateMsg {
 #[cw_serde]
 pub enum ExecuteMsg {
     UpdateParams(UpdateParamsMsg),
-    SunriseSwap(SunriseSwapMsg),
+    SendToSunrise(SendToSunriseMsg),
 }
 
 #[cw_serde]
@@ -17,7 +17,7 @@ pub struct UpdateParamsMsg {
 }
 
 #[cw_serde]
-pub struct SunriseSwapMsg {
+pub struct SendToSunriseMsg {
     pub sunrise_address: String,
     pub channel_id: String,
     pub memo: String,

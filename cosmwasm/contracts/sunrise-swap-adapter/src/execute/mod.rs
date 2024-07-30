@@ -1,2 +1,2 @@
-pub mod sunrise_swap;
+pub mod send_to_sunrise;
 pub mod update_params;

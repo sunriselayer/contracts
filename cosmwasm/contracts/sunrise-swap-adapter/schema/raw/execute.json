@@ -17,18 +17,18 @@
     {
       "type": "object",
       "required": [
-        "sunrise_swap"
+        "send_to_sunrise"
       ],
       "properties": {
-        "sunrise_swap": {
-          "$ref": "#/definitions/SunriseSwapMsg"
+        "send_to_sunrise": {
+          "$ref": "#/definitions/SendToSunriseMsg"
         }
       },
       "additionalProperties": false
     }
   ],
   "definitions": {
-    "SunriseSwapMsg": {
+    "SendToSunriseMsg": {
       "type": "object",
       "required": [
         "channel_id",

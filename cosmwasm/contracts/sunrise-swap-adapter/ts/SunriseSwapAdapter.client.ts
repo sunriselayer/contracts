@@ -14,17 +14,17 @@ import {
   InstantiateMsg,
   ExecuteMsg,
   UpdateParamsMsg,
-  SunriseSwapMsg,
+  SendToSunriseMsg,
   QueryMsg,
   Addr,
   Params,
-} from "./SunriseSwapAdapter.types";
-export interface SunriseSwapAdapterReadOnlyInterface {
+} from "./SendToSunriseAdapter.types";
+export interface SendToSunriseAdapterReadOnlyInterface {
   contractAddress: string;
   params: () => Promise<Params>;
 }
-export class SunriseSwapAdapterQueryClient
-  implements SunriseSwapAdapterReadOnlyInterface
+export class SendToSunriseAdapterQueryClient
+  implements SendToSunriseAdapterReadOnlyInterface
 {
   client: CosmWasmClient;
   contractAddress: string;
@@ -41,8 +41,8 @@ export class SunriseSwapAdapterQueryClient
     });
   };
 }
-export interface SunriseSwapAdapterInterface
-  extends SunriseSwapAdapterReadOnlyInterface {
+export interface SendToSunriseAdapterInterface
+  extends SendToSunriseAdapterReadOnlyInterface {
   contractAddress: string;
   sender: string;
   updateParams: (
@@ -55,7 +55,7 @@ export interface SunriseSwapAdapterInterface
     txMemo?: string,
     _funds?: Coin[]
   ) => Promise<ExecuteResult>;
-  sunriseSwap: (
+  SendToSunrise: (
     {
       channelId,
       memo,
@@ -70,9 +70,9 @@ export interface SunriseSwapAdapterInterface
     _funds?: Coin[]
   ) => Promise<ExecuteResult>;
 }
-export class SunriseSwapAdapterClient
-  extends SunriseSwapAdapterQueryClient
-  implements SunriseSwapAdapterInterface
+export class SendToSunriseAdapterClient
+  extends SendToSunriseAdapterQueryClient
+  implements SendToSunriseAdapterInterface
 {
   client: SigningCosmWasmClient;
   sender: string;
@@ -88,7 +88,7 @@ export class SunriseSwapAdapterClient
     this.sender = sender;
     this.contractAddress = contractAddress;
     this.updateParams = this.updateParams.bind(this);
-    this.sunriseSwap = this.sunriseSwap.bind(this);
+    this.SendToSunrise = this.SendToSunrise.bind(this);
   }
 
   updateParams = async (
@@ -114,7 +114,7 @@ export class SunriseSwapAdapterClient
       _funds
     );
   };
-  sunriseSwap = async (
+  SendToSunrise = async (
     {
       channelId,
       memo,
@@ -132,7 +132,7 @@ export class SunriseSwapAdapterClient
       this.sender,
       this.contractAddress,
       {
-        sunrise_swap: {
+        send_to_sunrise: {
           channel_id: channelId,
           memo,
           sunrise_address: sunriseAddress,

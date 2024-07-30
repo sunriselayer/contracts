@@ -1,5 +1,5 @@
 use crate::msgs::SendToSunriseMsg;
-use cosmwasm_std::{DepsMut, Env, MessageInfo, Response, StdError};
+use cosmwasm_std::{DepsMut, Env, MessageInfo, Response};
 use cw_utils::one_coin;
 use neutron_sdk::{
     bindings::{
@@ -8,7 +8,7 @@ use neutron_sdk::{
     },
     query::min_ibc_fee::query_min_ibc_fee,
     sudo::msg::RequestPacketTimeoutHeight,
-    NeutronError, NeutronResult,
+    NeutronResult,
 };
 
 const FEE_DENOM: &str = "untrn";
@@ -22,14 +22,7 @@ pub fn execute_send_to_sunrise(
 ) -> NeutronResult<Response<NeutronMsg>> {
     let mut response = Response::new();
 
-    let coin = match one_coin(&info) {
-        Ok(coin) => coin,
-        Err(payment_error) => {
-            return Err(NeutronError::Std(StdError::generic_err(
-                payment_error.to_string(),
-            )))
-        }
-    };
+    let coin = one_coin(&info).unwrap();
 
     // If we want to verify sender
     // https://github.com/axelarnetwork/evm-cosmos-gmp-sample/blob/main/cosmwasm-integration/README.md

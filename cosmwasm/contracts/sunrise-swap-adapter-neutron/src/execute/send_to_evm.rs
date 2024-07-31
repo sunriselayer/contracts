@@ -1,6 +1,7 @@
 use crate::msgs::SendToEvmMsg;
 use cosmwasm_std::{DepsMut, Env, MessageInfo, Response};
 use cw_utils::one_coin;
+use ethabi::{encode, Token};
 use neutron_sdk::{
     bindings::{
         msg::{IbcFee, NeutronMsg},
@@ -18,7 +19,8 @@ const IBC_CHANNEL: &str = "channel-8";
 
 // Axelar GMP Account
 // https://docs.axelar.dev/dev/cosmos-gmp#messages-from-native-cosmos
-const AXELAR_GATEWAY: &str = "axelar1dv4u5k73pzqrxlzujxg3qp8kvc3pje7jtdvu72npnt5zhq05ejcsn5qme5s";
+// https://github.com/axelarnetwork/axelar-docs/issues/435
+const AXELAR_GATEWAY: &str = "axelar1dv4u5k73pzqrxlzujxg3qp8kvc3pje7jtdvu72npnt5zhq05ejcsn5qme5";
 
 // Neutron Fee Denom
 const FEE_DENOM: &str = "untrn";
@@ -30,9 +32,12 @@ pub fn execute_send_to_evm(
     info: MessageInfo,
     msg: SendToEvmMsg,
 ) -> NeutronResult<Response<NeutronMsg>> {
+    use crate::types::GeneralMessage;
+
     let mut response = Response::new();
 
-    let coin = one_coin(&info).unwrap();
+    // info.funds used to pay gas. Must only contain 1 token type.
+    let coin: cosmwasm_std::Coin = one_coin(&info).unwrap();
 
     // If we want to verify sender
     // https://github.com/axelarnetwork/evm-cosmos-gmp-sample/blob/main/cosmwasm-integration/README.md
@@ -42,8 +47,18 @@ pub fn execute_send_to_evm(
 
     // contract must pay for relaying of acknowledgements
     // See more info here: https://docs.neutron.org/neutron/feerefunder/overview
+
+    let payload = encode(&vec![Token::String(msg.recipient)]);
+    let gmp_message = GeneralMessage {
+        destination_chain: msg.destination_chain,
+        destination_address: msg.destination_contract,
+        payload,
+        type_: 1,
+        fee: None,
+    };
+
     let fee = min_ntrn_ibc_fee(query_min_ibc_fee(deps.as_ref())?.min_fee);
-    let msg = NeutronMsg::IbcTransfer {
+    let ibc_msg = NeutronMsg::IbcTransfer {
         source_port: "transfer".to_string(),
         source_channel: IBC_CHANNEL.to_string(),
         token: coin,
@@ -54,11 +69,11 @@ pub fn execute_send_to_evm(
             revision_number: Some(0),
         },
         timeout_timestamp: env.block.time.plus_seconds(604_800u64).nanos(),
-        memo: to_string(&msg).unwrap(),
+        memo: to_string(&gmp_message).unwrap(),
         fee,
     };
 
-    response = response.add_message(msg);
+    response = response.add_message(ibc_msg);
 
     Ok(response)
 }

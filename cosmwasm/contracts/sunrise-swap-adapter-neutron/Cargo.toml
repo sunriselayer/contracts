@@ -23,7 +23,10 @@ crate-type = ["cdylib", "rlib"]
 [dependencies]
 cosmwasm-std = { version = "2.1.0", features = ["stargate"] }
 cosmwasm-schema = "2.1.0"
+schemars = "0.8.10"
+serde = { version = "1.0.145", default-features = false, features = ["derive"] }
 thiserror = "1.0"
+ethabi = { version = "18.0.0", default-features = false, features = [] }
 cw-storage-plus =  "2.0.0"
 cw-utils = "2.0.0"
 serde-json-wasm = "1.0.1"

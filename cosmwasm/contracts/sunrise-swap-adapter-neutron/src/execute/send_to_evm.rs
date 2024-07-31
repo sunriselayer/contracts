@@ -1,4 +1,5 @@
 use crate::msgs::SendToEvmMsg;
+use crate::types::{Fee, GeneralMessage};
 use cosmwasm_std::{DepsMut, Env, MessageInfo, Response};
 use cw_utils::one_coin;
 use ethabi::{encode, Token};
@@ -21,6 +22,9 @@ const IBC_CHANNEL: &str = "channel-8";
 // https://docs.axelar.dev/dev/cosmos-gmp#messages-from-native-cosmos
 // https://github.com/axelarnetwork/axelar-docs/issues/435
 const AXELAR_GATEWAY: &str = "axelar1dv4u5k73pzqrxlzujxg3qp8kvc3pje7jtdvu72npnt5zhq05ejcsn5qme5";
+// Axelar relayer address to use as the fee recipient
+// https://github.com/axelarnetwork/evm-cosmos-gmp-sample/blob/main/native-integration/README.md#relayer-service-for-cosmos---evm
+const AXELAR_FEE_RECIPIENT: &str = "axelar1zl3rxpp70lmte2xr6c4lgske2fyuj3hupcsvcd";
 
 // Neutron Fee Denom
 const FEE_DENOM: &str = "untrn";
@@ -32,8 +36,6 @@ pub fn execute_send_to_evm(
     info: MessageInfo,
     msg: SendToEvmMsg,
 ) -> NeutronResult<Response<NeutronMsg>> {
-    use crate::types::GeneralMessage;
-
     let mut response = Response::new();
 
     // info.funds used to pay gas. Must only contain 1 token type.
@@ -49,12 +51,21 @@ pub fn execute_send_to_evm(
     // See more info here: https://docs.neutron.org/neutron/feerefunder/overview
 
     let payload = encode(&vec![Token::String(msg.recipient)]);
+
+    let fee: Option<Fee> = msg.fee.map(|amount| Fee {
+        amount,
+        recipient: AXELAR_FEE_RECIPIENT.to_string(),
+    });
+
+    // The type field denotes the message type
+    // 1: pure message
+    // 2: message with token
     let gmp_message = GeneralMessage {
         destination_chain: msg.destination_chain,
         destination_address: msg.destination_contract,
         payload,
-        type_: 1,
-        fee: None,
+        type_: 2,
+        fee,
     };
 
     let fee = min_ntrn_ibc_fee(query_min_ibc_fee(deps.as_ref())?.min_fee);

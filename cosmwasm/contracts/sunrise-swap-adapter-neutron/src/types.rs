@@ -11,8 +11,8 @@ pub struct Params {
     Clone, Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize, schemars::JsonSchema,
 )]
 pub struct Fee {
-    amount: String,
-    recipient: String,
+    pub amount: String,
+    pub recipient: String,
 }
 #[derive(Serialize, Deserialize, Debug, PartialEq, Eq)]
 pub struct GeneralMessage {

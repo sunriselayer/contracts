@@ -30,6 +30,7 @@ pub struct SendToEvmMsg {
     pub destination_contract: String,
     pub recipient: String,
     pub fee: Option<String>,
+    pub refund_recipient: Option<String>,
 }
 
 #[cw_serde]

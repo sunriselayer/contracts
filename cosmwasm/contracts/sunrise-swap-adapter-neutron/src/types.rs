@@ -22,4 +22,5 @@ pub struct GeneralMessage {
     #[serde(rename = "type")]
     pub type_: i64,
     pub fee: Option<Fee>,
+    pub refund_recipient: Option<String>,
 }

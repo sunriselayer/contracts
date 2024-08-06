@@ -2,7 +2,8 @@ use crate::msgs::SendToEvmMsg;
 use crate::types::{Fee, GeneralMessage};
 use cosmwasm_std::{DepsMut, Env, MessageInfo, Response};
 use cw_utils::one_coin;
-use ethabi::{encode, Token};
+use ethabi::ethereum_types::H160;
+use ethabi::{encode, Address, Token};
 use neutron_sdk::{
     bindings::{
         msg::{IbcFee, NeutronMsg},
@@ -10,7 +11,7 @@ use neutron_sdk::{
     },
     query::min_ibc_fee::query_min_ibc_fee,
     sudo::msg::RequestPacketTimeoutHeight,
-    NeutronResult,
+    NeutronError, NeutronResult,
 };
 use serde_json_wasm::to_string;
 
@@ -50,7 +51,12 @@ pub fn execute_send_to_evm(
     // contract must pay for relaying of acknowledgements
     // See more info here: https://docs.neutron.org/neutron/feerefunder/overview
 
-    let payload = encode(&vec![Token::String(msg.recipient)]);
+    // build payload
+    let addr = match msg.recipient.parse::<H160>() {
+        Ok(address) => Ok(Token::Address(Address::from(address))),
+        Err(error) => Err(NeutronError::SerdeJSONWasm(error.to_string())),
+    }?;
+    let payload = encode(&vec![addr]);
 
     let fee: Option<Fee> = msg.fee.map(|amount| Fee {
         amount,

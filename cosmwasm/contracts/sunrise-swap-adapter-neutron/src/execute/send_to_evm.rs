@@ -61,7 +61,6 @@ pub fn execute_send_to_evm(
     let fee: Option<Fee> = Some(Fee {
         amount: msg.fee,
         recipient: AXELAR_FEE_RECIPIENT.to_string(),
-        refund_recipient: msg.refund_recipient,
     });
 
     // The type field denotes the message type
@@ -73,6 +72,7 @@ pub fn execute_send_to_evm(
         payload,
         type_: 2,
         fee,
+        refund_address: msg.refund_recipient,
     };
 
     let fee = min_ntrn_ibc_fee(query_min_ibc_fee(deps.as_ref())?.min_fee);

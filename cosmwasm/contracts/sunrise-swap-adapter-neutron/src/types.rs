@@ -13,7 +13,6 @@ pub struct Params {
 pub struct Fee {
     pub amount: String,
     pub recipient: String,
-    pub refund_recipient: Option<String>,
 }
 #[derive(Serialize, Deserialize, Debug, PartialEq, Eq)]
 pub struct GeneralMessage {
@@ -23,4 +22,5 @@ pub struct GeneralMessage {
     #[serde(rename = "type")]
     pub type_: i64,
     pub fee: Option<Fee>,
+    pub refund_address: Option<String>,
 }

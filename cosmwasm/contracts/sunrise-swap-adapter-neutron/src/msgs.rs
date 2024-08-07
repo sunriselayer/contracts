@@ -29,7 +29,7 @@ pub struct SendToEvmMsg {
     pub destination_chain: String,
     pub destination_contract: String,
     pub recipient: String,
-    pub fee: Option<String>,
+    pub fee: String,
     pub refund_recipient: Option<String>,
 }
 

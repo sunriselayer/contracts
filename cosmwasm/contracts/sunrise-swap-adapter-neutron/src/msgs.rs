@@ -8,7 +8,8 @@ pub struct InstantiateMsg {
 #[cw_serde]
 pub enum ExecuteMsg {
     UpdateParams(UpdateParamsMsg),
-    SunriseSwap(SunriseSwapMsg),
+    SendToSunrise(SendToSunriseMsg),
+    SendToEvm(SendToEvmMsg),
 }
 
 #[cw_serde]
@@ -17,10 +18,20 @@ pub struct UpdateParamsMsg {
 }
 
 #[cw_serde]
-pub struct SunriseSwapMsg {
+pub struct SendToSunriseMsg {
     pub sunrise_address: String,
     pub channel_id: String,
     pub memo: String,
+}
+
+#[cw_serde]
+pub struct SendToEvmMsg {
+    pub destination_chain: String,
+    pub destination_contract: String,
+    pub recipient: String,
+    pub fee: String,
+    // refund is not supported for cosmos-chain
+    // pub refund_recipient: Option<String>,
 }
 
 #[cw_serde]

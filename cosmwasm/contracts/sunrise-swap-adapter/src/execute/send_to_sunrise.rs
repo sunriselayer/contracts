@@ -1,14 +1,14 @@
 use crate::error::ContractError;
-use crate::msgs::SunriseSwapMsg;
+use crate::msgs::SendToSunriseMsg;
 use cosmwasm_std::{CosmosMsg, DepsMut, Env, IbcTimeout, MessageInfo, Response};
 use cw_utils::one_coin;
 
 #[cfg(not(feature = "library"))]
-pub fn execute_sunrise_swap(
+pub fn execute_send_to_sunrise(
     _deps: DepsMut,
     env: Env,
     info: MessageInfo,
-    msg: SunriseSwapMsg,
+    msg: SendToSunriseMsg,
 ) -> Result<Response, ContractError> {
     let mut response = Response::new();
     let coin = one_coin(&info)?;

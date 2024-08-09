@@ -1,5 +1,6 @@
 use crate::error::ContractError;
-use crate::execute::sunrise_swap::execute_sunrise_swap;
+use crate::execute::send_to_evm::execute_send_to_evm;
+use crate::execute::send_to_sunrise::execute_send_to_sunrise;
 use crate::execute::update_params::execute_update_params;
 use crate::msgs::{ExecuteMsg, InstantiateMsg, MigrateMsg, QueryMsg};
 use crate::query::params::query_params;
@@ -37,7 +38,8 @@ pub fn execute(
 ) -> NeutronResult<Response<NeutronMsg>> {
     match msg {
         ExecuteMsg::UpdateParams(msg) => execute_update_params(deps, env, info, msg),
-        ExecuteMsg::SunriseSwap(msg) => execute_sunrise_swap(deps, env, info, msg),
+        ExecuteMsg::SendToSunrise(msg) => execute_send_to_sunrise(deps, env, info, msg),
+        ExecuteMsg::SendToEvm(msg) => execute_send_to_evm(deps, env, info, msg),
     }
 }
 

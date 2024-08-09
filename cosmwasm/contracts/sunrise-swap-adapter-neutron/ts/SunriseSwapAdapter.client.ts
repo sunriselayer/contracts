@@ -14,7 +14,7 @@ import {
   InstantiateMsg,
   ExecuteMsg,
   UpdateParamsMsg,
-  SunriseSwapMsg,
+  SendToSunriseMsg,
   QueryMsg,
   Addr,
   Params,
@@ -55,7 +55,7 @@ export interface SunriseSwapAdapterInterface
     txMemo?: string,
     _funds?: Coin[]
   ) => Promise<ExecuteResult>;
-  sunriseSwap: (
+  SendToSunrise: (
     {
       channelId,
       memo,
@@ -88,7 +88,7 @@ export class SunriseSwapAdapterClient
     this.sender = sender;
     this.contractAddress = contractAddress;
     this.updateParams = this.updateParams.bind(this);
-    this.sunriseSwap = this.sunriseSwap.bind(this);
+    this.SendToSunrise = this.SendToSunrise.bind(this);
   }
 
   updateParams = async (
@@ -114,7 +114,7 @@ export class SunriseSwapAdapterClient
       _funds
     );
   };
-  sunriseSwap = async (
+  SendToSunrise = async (
     {
       channelId,
       memo,
@@ -132,7 +132,7 @@ export class SunriseSwapAdapterClient
       this.sender,
       this.contractAddress,
       {
-        sunrise_swap: {
+        send_to_sunrise: {
           channel_id: channelId,
           memo,
           sunrise_address: sunriseAddress,

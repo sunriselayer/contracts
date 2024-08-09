@@ -30,7 +30,8 @@ pub struct SendToEvmMsg {
     pub destination_contract: String,
     pub recipient: String,
     pub fee: String,
-    pub refund_recipient: Option<String>,
+    // refund is not supported for cosmos-chain
+    // pub refund_recipient: Option<String>,
 }
 
 #[cw_serde]

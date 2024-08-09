@@ -72,7 +72,8 @@ pub fn execute_send_to_evm(
         payload,
         type_: 2,
         fee,
-        refund_address: msg.refund_recipient,
+        // refund is not supported for cosmos-chain
+        // refund_recipient: msg.refund_recipient,
     };
 
     let fee = min_ntrn_ibc_fee(query_min_ibc_fee(deps.as_ref())?.min_fee);

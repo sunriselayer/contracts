@@ -22,5 +22,6 @@ pub struct GeneralMessage {
     #[serde(rename = "type")]
     pub type_: i64,
     pub fee: Option<Fee>,
-    pub refund_address: Option<String>,
+    // refund is not supported for cosmos-chain
+    // pub refund_address: Option<String>,
 }
